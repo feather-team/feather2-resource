@@ -1,0 +1,19 @@
+{
+  "name": "feather-resource",
+  "version": "1.0.0",
+  "description": "nodejs版本通用的resource获取",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "feather",
+    "feather2",
+    "resource"
+  ],
+  "author": "jsyczhanghao@sina.com",
+  "license": "ISC",
+  "dependencies": {
+    "underscore": "^1.8.3"
+  }
+}
