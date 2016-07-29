@@ -220,17 +220,11 @@ Resource.prototype.getRequireInfo = function(mapInfo){
         maps[pkg] = _.uniq(ids);
     });
 
-    var result = {
+    return {
         deps: deps,
         map: maps
     };
-
-    if(this.options.combo && !mapInfo.isPagelet){
-        result.combo = this.options.combo;
-    }
-
-    return result;
-}
+};
 
 Resource.prototype.getResourceInfo = function(id){
     var mapInfo = this.getMapInfo(id), isPagelet = mapInfo.isPagelet;
