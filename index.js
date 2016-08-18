@@ -42,16 +42,12 @@ Resource.prototype.getMapInfo = function(id){
         _.extend(refsMap, usefulMap);
     });
 
-
-
     return _.extend(refsMap, map);
 };
 
 Resource.prototype.getUrls = function(resources, returnHash, includeNotFound, founds, pkgFounds){
     var self = this;
     var urls = [], founds = founds || {}, pkgFounds = pkgFounds || {};
-
-
 
     resources.forEach(function(resource){
         var info = self.maps[resource], url = founds[resource];
@@ -241,7 +237,7 @@ Resource.prototype.getResourceInfo = function(id){
         mapInfo.asyncs = (mapInfo.asyncs || []).concat(pageletAsyncs);
     }
 
-    if(mapInfo.asyncs && !isPagelet && !mapInfo.isWidget){
+    if(mapInfo.asyncs && !isPagelet){
         if(mapInfo.headJs){
             mapInfo.headJs.unshift(Resource.FEATHER_LOADER);
         }else{
