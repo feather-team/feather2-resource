@@ -93,7 +93,6 @@ Resource.prototype.getUrls = function(resources, returnHash, includeNotFound, fo
             url = resource;
 
             if(includeNotFound){
-
                 founds[resource] = resource;
             }   
         }
@@ -257,16 +256,4 @@ Resource.prototype.getResourceInfo = function(id){
     return result;
 };
 
-var ResourceObject;
-
-exports.init = function(maps, options){
-    if(!ResourceObject){
-        ResourceObject = new Resource(maps, options);
-    }
-
-    return ResourceObject;
-}
-
-exports.getResourceInfo = function(id){
-    return ResourceObject.getResourceInfo(id);
-};
+module.exports = Resource;
