@@ -1,5 +1,5 @@
 {
-  "name": "feather-resource",
+  "name": "feather2-resource",
   "version": "1.0.0",
   "description": "nodejs版本通用的resource获取",
   "main": "index.js",
@@ -15,5 +15,9 @@
   "license": "ISC",
   "dependencies": {
     "underscore": "^1.8.3"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/feather-team/feather2-resource.git"
   }
 }
