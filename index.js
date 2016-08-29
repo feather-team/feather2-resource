@@ -114,7 +114,7 @@ Resource.prototype.getThreeUrls = function(mapInfo){
             for(var i = 0; i < urls.length; i++){
                 var url = urls[i];
 
-                if(self.urlCache[url].type == 'css'){
+                if(self.urlCache[url] && self.urlCache[url].type == 'css'){
                     inJsCss.push(url);
                     urls.splice(i--, 1);
                 }
