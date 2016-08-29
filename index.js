@@ -172,7 +172,7 @@ Resource.prototype.getThreeUrls = function(mapInfo){
 
                     if(url.length + len >= comboOptions.maxUrlLength){
                         len = 0;
-                        finalUrls.push(dir + '??' + baseNames.join(','));
+                        finalUrls.push(dir + comboOptions.syntax[0] + baseNames.join(comboOptions.syntax[1]));
                         baseNames = [];
                     }else{
                         len += url.length;
@@ -180,7 +180,7 @@ Resource.prototype.getThreeUrls = function(mapInfo){
                 });
 
                 if(baseNames.length){
-                    finalUrls.push(dir + '??' + baseNames.join(','));
+                    finalUrls.push(dir + comboOptions.syntax[0] + baseNames.join(comboOptions.syntax[1]));
                 }
             }else{
                 finalUrls.push(urls[0]);
