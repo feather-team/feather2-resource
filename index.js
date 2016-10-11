@@ -79,7 +79,7 @@ Resource.prototype.getUrls = function(resources, returnHash, includeNotFound, fo
                     urls = _.extend(self.getUrls(info.asyncs, false, includeNotFound, founds, pkgFounds), urls);
                 }
 
-                if(pkgInfo && pkg.useJsWraper){
+                if(pkgInfo && pkgInfo.useJsWraper){
                     var noWraperHas = pkgInfo.has.filter(function(has){
                         return founds[has];
                     });
