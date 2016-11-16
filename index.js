@@ -184,7 +184,7 @@ Resource.prototype.getThreeUrls = function(mapInfo){
                     if(bases.length > 1){
                         finalUrls.push(dir + comboOptions.syntax[0] + bases.join(comboOptions.syntax[1]));
                     }else if(bases.length == 1){
-                        finalUrls.push(bases[0]);
+                        finalUrls.push(dir + bases[0]);
                     }
 
                     bases.length = 0;
