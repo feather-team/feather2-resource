@@ -69,6 +69,8 @@ Resource.prototype.getUrls = function(resources, returnHash, includeNotFound, fo
                     self.urlCache[url] = info;
                 }
 
+                self.urlCache[url].id = resource;
+
                 founds[resource] = url;
 
                 if(info.deps){
@@ -133,59 +135,76 @@ Resource.prototype.getThreeUrls = function(mapInfo){
 
         if(!comboOptions) return;
 
-        var finalUrls = [], combos = [];
+        var combos = [], i = 0;
 
         urls.forEach(function(url){
             var info = self.urlCache[url];
 
             if(info){
-                if(comboOptions.onlyUnPackFile && !info.isPkg || !comboOptions.onlyUnPackFile){
-                    combos.push(url);
-                }else{
-                    finalUrls.push(url);
-                }
-            }else{
-                finalUrls.push(url);
-            }
-        });
-
-        var combosDirGroup = {};
-
-        combos.forEach(function(url){
-            var matches = url.match(/^(?:(?:https?:)?\/\/[^\/]+)?\//);
-            var baseurl = matches[0];
-
-            if(!combosDirGroup[baseurl]){
-                combosDirGroup[baseurl] = [];
-            }
-
-            combosDirGroup[baseurl].push(url);
-        });
-
-        _.each(combosDirGroup, function(urls, dir){
-            if(urls.length > 1){
-                var baseNames = [], dirLen = dir.length, len = 0;
-
-                urls.forEach(function(url){
-                    url = url.substr(dirLen);
-                    baseNames.push(url);
-
-                    if(url.length + len >= comboOptions.maxUrlLength){
-                        len = 0;
-                        finalUrls.push(dir + comboOptions.syntax[0] + baseNames.join(comboOptions.syntax[1]));
-                        baseNames = [];
+                if((comboOptions.onlyUnPackFile && !info.isPkg || !comboOptions.onlyUnPackFile) 
+                    && !/(?:^|:)static\/(?:.+?\/)*third\//.test(info.id)
+                ){
+                    if(!combos[i]){
+                        combos[i] = [url];
                     }else{
-                        len += url.length;
+                        combos[i].push(url);
                     }
-                });
-
-                if(baseNames.length){
-                    finalUrls.push(dir + comboOptions.syntax[0] + baseNames.join(comboOptions.syntax[1]));
+                }else{
+                    combos.push(url);
+                    i = combos.length;
                 }
             }else{
-                finalUrls.push(urls[0]);
+                combos.push(url);
+                i = combos.length;
             }
         });
+
+        var finalUrls = [];
+
+        combos.forEach(function(urls){
+            if(typeof urls == 'string'){
+                finalUrls.push(urls);
+                return;
+            }else if(urls.length == 1){
+                finalUrls.push(urls[0]);
+                return;
+            }
+
+            var dir, len = 0, dirLen, bases = [];
+
+            urls.forEach(function(url){
+                var matches = url.match(/^(?:(?:https?:)?\/\/[^\/]+)?\//);
+                var domain = matches[0];
+
+                if(!dir){
+                    dir = domain;
+                }
+
+                if(domain != dir || len >= comboOptions.maxUrlLength){
+                    if(bases.length > 1){
+                        finalUrls.push(dir + comboOptions.syntax[0] + bases.join(comboOptions.syntax[1]));
+                    }else if(bases.length == 1){
+                        finalUrls.push(bases[0]);
+                    }
+
+                    bases.length = 0;
+                    dir = domain;
+                }
+
+                dirLen = domain.length;
+
+                var base = url.substr(dirLen);
+                bases.push(base);
+                len += base.length;
+            });
+
+            if(bases.length > 1){
+                finalUrls.push(dir + comboOptions.syntax[0] + bases.join(comboOptions.syntax[1]));
+            }else if(bases.length == 1){
+                finalUrls.push(dir + bases[0]);
+            }   
+        });
+
 
         allUrls[type] = finalUrls;
     });
