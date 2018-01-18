@@ -173,7 +173,7 @@ Resource.prototype.getThreeUrls = function(mapInfo){
             var dir, len = 0, dirLen, bases = [];
 
             urls.forEach(function(url){
-                var matches = url.match(/^(?:(?:https?:)?\/\/[^\/]+)?\//);
+                var matches = url.match(/^(?:(?:(?:https?:)?\/\/)?[^\/]+)?\//);
                 var domain = matches[0];
 
                 if(!dir){
